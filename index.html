@@ -17,7 +17,7 @@
         <!-- Load CanvasFlowMapLayer; change the path (relative URL) if necessary -->
         <script src="canvasFlowmapLayer.js"></script>
         <!-- data -->      
-        <script type="text/javascript" src="from_cook_county.js"></script>
+        <script type="text/javascript" src="outflowCook.js"></script>
         <style>
             html, body, #map {
                 height: 100%;
@@ -55,7 +55,7 @@
 
             var map = L.map('map', {
                 center: [39, -98],
-                zoom: 4
+                zoom: 5
             });
 
             L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
@@ -84,19 +84,19 @@
                 animationStarted: true,
                 animationEasingFamily: 'Cubic', // Compare the options:
                                                 // https://jwasilgeo.github.io/Leaflet.Canvas-Flowmap-Layer/docs/comparison/
-                animationEasingType: 'In',
+                animationEasingType: 'Out',
                 animationDuration: 2000,  // in millisecond, the larger the number the slower
 
                 canvasBezierStyle: {
                     //This example demonstrates the use of graduated symbols (class breaks) for the flowlines
                     //Other options: https://developers.arcgis.com/documentation/common-data-types/renderer-objects.htm
                     type: 'classBreaks',
-                    field: 'Net_B2A', // The field/value to be used for symbolizing the lines
+                    field: 'Flow_A2B', // The field/value to be used for symbolizing the lines
 
                     // Define the classes and symbols below
                     classBreakInfos: [{
-                        classMinValue: -150,  // break values of this class, using field values defined above
-                        classMaxValue: -100,
+                        classMinValue: 900,  // break values of this class, using field values defined above
+                        classMaxValue: 962,
                         symbol: {  // Define the symbology for this class
                                 // See an example from the documentation:https://github.com/jwasilgeo/Leaflet.Canvas-Flowmap-Layer/blob/master/docs/class-breaks-symbology/index.html#L94-L137
                             strokeStyle: '#AD0755',  // flow line color
@@ -104,16 +104,16 @@
                             lineCap: 'round',  // shape of the stroke end
                         }
                     }, {  // another class
-                        classMinValue: -99,
-                        classMaxValue: -50,
+                        classMinValue: 850,
+                        classMaxValue: 899,
                         symbol: {
                             strokeStyle: '#B21D63',
                             lineWidth: 6,
                             lineCap: 'round',
                         }
                     }, {  // one more class
-                        classMinValue: -49,
-                        classMaxValue: 0,
+                        classMinValue: 800,
+                        classMaxValue: 849,
                         symbol: {
                             strokeStyle: '#CA2070',
                             lineWidth: 3.5,
@@ -152,9 +152,9 @@
                 var div = L.DomUtil.create('div', 'legend'); // create a div with a class "legend"
                 div.innerHTML = '<b>Outflow from Cook County</b><br>' +
                     // one line per class: height = lineWidth, background = strokeStyle
-                    '<i class="line" style="height:10px; background:#AD0755"></i>400 to 433<br>' +
-                    '<i class="line" style="height:6px; background:#B21D63"></i>300 to 399<br>' +
-                    '<i class="line" style="height:3.5px; background:#CA2070"></i>200 to 299<br>' +
+                    '<i class="line" style="height:10px; background:#AD0755"></i>900 to 962<br>' +
+                    '<i class="line" style="height:6px; background:#B21D63"></i>850 to 899<br>' +
+                    '<i class="line" style="height:3.5px; background:#CA2070"></i>800 to 849<br>' +
                     // the circle colors are the default colors of the library
                     '<i class="dot" style="background:rgb(195,255,62); border:1px solid #555"></i>Cook County<br>' +
                     '<i class="dot" style="background:rgb(17,142,170)"></i>Destination County';
